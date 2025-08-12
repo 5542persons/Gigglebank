@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gigglebux Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <a href="/logout">Logout</a>
+
+    <h2>Balances:</h2>
+    <ul>
+        {% for user in users %}
+            <li>{{ user['username'] }}: {{ user['balance'] }} Gigglebux</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Send Gigglebux</h2>
+    <form method="POST" action="/send">
+        Receiver: <input type="text" name="receiver" required><br>
+        Amount: <input type="number" name="amount" required><br>
+        Your Password: <input type="password" name="password" required><br>
+        <button type="submit">Send Gigglebux</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #444;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        button {
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .approve {
+            background: green;
+            color: white;
+        }
+        .reject {
+            background: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <h2>Pending Transactions</h2>
+    {% if pending_transactions %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+            {% for tx in pending_transactions %}
+            <tr>
+                <td>{{ tx.id }}</td>
+                <td>{{ tx.sender }}</td>
+                <td>{{ tx.receiver }}</td>
+                <td>{{ tx.amount }} GB</td>
+                <td>
+                    <form method="post" action="/approve_transaction" style="display:inline;">
+                        <input type="hidden" name="tx_id" value="{{ tx.id }}">
+                        <button type="submit" class="approve">Approve</button>
+                    </form>
+                    <form method="post" action="/reject_transaction" style="display:inline;">
+                        <input type="hidden" name="tx_id" value="{{ tx.id }}">
+                        <button type="submit" class="reject">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No pending transactions.</p>
+    {% endif %}
+</body>
+</html>
